@@ -67,6 +67,12 @@ never compete with it.
 6. **Deterministic routing** — Do not add a route-choice question when [`routing.md`](workflows/routing.md) resolves the request. If a route prerequisite is missing, state it and stop that route.
 7. **Owning-source recovery** — On failure, repair or regenerate the owning source artifact and resume from the route's declared pointer. Do not silently downgrade a required artifact.
 
+## Non-Negotiable Presentation Design Guarantees
+
+1. **Minimum Font Size Floor (≥ 11 pt / 14.6 px)**: All authored text elements (body copy, bullets, table cells, metadata, footers, badges, and captions) MUST enforce a strict lower bound of `font-size ≥ 11 pt` (or `14.6 px` on standard 96 DPI canvas). Sub-11pt text is strictly forbidden to guarantee readability across all display media.
+2. **Zero Text Overflow & Card Boundary Fit**: Text bounding boxes and card containers MUST provide sufficient padding (`0.16"–0.22"`) and height. Content length and line-breaks must be calibrated so text never overflows, clips, or touches container boundaries.
+3. **Light Theme Default Standard**: Unless an explicit dark theme is locked by brand/template or explicitly requested by the user, all slide decks MUST default to a clean, modern, high-contrast **Light Theme**: light canvas (`#F8FAFC` / `#FFFFFF`), pure white cards (`#FFFFFF`) with crisp subtle borders (`#CBD5E1` / `#E2E8F0`), high-contrast dark slate headers/text (`#0F172A` / `#334155`), and vibrant semantic accents (`#0284C7`, `#059669`, `#D97706`).
+
 ## Global Communication Rules
 
 - Match the user's language and source language unless the user explicitly overrides it.

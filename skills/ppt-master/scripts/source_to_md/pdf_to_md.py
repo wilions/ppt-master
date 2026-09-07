@@ -25,10 +25,13 @@ from _conversion_profile import write_conversion_profile_best_effort  # noqa: E4
 configure_utf8_stdio()
 
 try:
-    import fitz  # PyMuPDF
+    import pymupdf as fitz
 except ImportError:
-    print("[ERROR] PyMuPDF not installed. Run: pip install PyMuPDF", file=sys.stderr)
-    sys.exit(1)
+    try:
+        import fitz
+    except ImportError:
+        print("[ERROR] PyMuPDF not installed. Run: pip install PyMuPDF", file=sys.stderr)
+        sys.exit(1)
 
 FONT_BODY_SIZE = 12
 FONT_H1_SIZE = 24

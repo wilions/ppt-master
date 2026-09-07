@@ -37,7 +37,7 @@ Style Review Focus is supplemental acceptance context, not a second rubric. It c
 | # | Category | Trigger | Permitted fix |
 |---|----------|---------|---------------|
 | H1 | Out-of-bounds | element bbox falls outside the bounds declared by `canvas.view_box` | shrink or reposition into canvas |
-| H2 | Text overflow | text bbox extends past its visual container | reduce font-size or line-break |
+| H2 | Text overflow | text bbox extends past its visual container | re-balance container size, trim non-critical wording, or re-wrap lines; MUST NOT reduce font-size below 11 pt (14.6 px) |
 | H3 | Text overlap | two `<text>` elements' bboxes intersect (tspans within one text excluded) | reposition or resize |
 | H4 | Readability | contrast < 4.5 (small text) / < 3.0 (font-size ≥ 24px); OR text directly atop a complex image with no scrim | if **neither** the foreground nor the background color is a brand token: position-only escape — add a `<rect>` scrim under the text, or raise the offending text's font-size to ≥ 24px so the 3.0 threshold applies. If **either** color is a brand token: do not edit the SVG → goto §1.1 escalation. |
 | ~~H5~~ | Font-ramp drift | *covered by `svg_quality_checker.py` — see §0 prerequisites* | n/a (do not re-check) |
@@ -45,14 +45,16 @@ Style Review Focus is supplemental acceptance context, not a second rubric. It c
 | H7 | Declared page chrome displaced | page number / header / footer is explicitly declared by `design_spec §IX`, `spec_lock.md`, or the installed template with a concrete anchor, but is covered, missing, or outside `canvas.view_box` | restore only that declared chrome to its declared anchor; never invent undeclared chrome |
 | H8 | Image rendering broken | `<image>` empty / broken-image / severe distortion | fix `href`; for `adaptive`, choose `meet` or a safer crop; a new complete-display requirement returns to §VIII `Crop Policy` and lock projection |
 | H9 | Missing key element | element required by `design_spec §IX` outline is absent from rendered slide | recreate from spec |
+| H10 | Minimum Font Size Floor | any visible text element with `font-size < 11 pt` (or `< 14.6 px` on standard canvas) | elevate font-size to ≥ 11 pt (14.6 px) and reflow container/text wrapping |
+| H11 | Light Theme Contrast | light theme deck uses dark canvas or illegible low-contrast text on card | restore light canvas (`#F8FAFC`/`#FFFFFF`) and dark text (`#0F172A`/`#334155`) with ≥ 4.5:1 contrast |
 
 Detection order (run sequentially, do not parallelize within a single subagent):
 
 ```
-H1 → H2 → H7  (structure)
-H3 → H6      (collisions)
-H4           (readability)
-H8 → H9      (content)
+H1 → H2 → H7 → H10 (structure & typography)
+H3 → H6           (collisions)
+H4 → H11          (readability & theme contrast)
+H8 → H9           (content)
 ```
 
 ### §1.1 Brand-token contrast escalation
